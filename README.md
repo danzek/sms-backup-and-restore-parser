@@ -9,11 +9,13 @@ The SMS Backup & Restore Android app is currently maintained by [SyncTech](http:
 
 ## With all of these existing parsers, why did you write your own?
 
-**Stability:** I encountered backup XML files that were several gigabytes in size. These large backup files caused existing solutions to fail and/or took a long time. The backup format base64-encodes images from MMS messages within the XML file itself. I found that lines of data in these files exceeded the maximum buffer size for line-reader-based solutions to reading the file contents and either caused truncation or complete failure in several solutions (including Excel). Also, it didn't make sense to me why parsing should take so long (my solution processed a 1 GB XML SMS/MMS backup in less than 15 seconds&mdash;which included exporting out all of the images).
+**Stability:** I encountered backup XML files that were several gigabytes in size. These large backup files caused some existing solutions to fail. The backup format base64-encodes images from MMS messages within the XML file itself. I found that lines of data in these files exceeded the maximum buffer size for line-reader-based solutions and either caused truncation or complete failure in several solutions (including Excel).
 
-**Privacy:** Both SyncTech and Matt Joseph's recommended solutions involve uploading the backup file(s) to a website. While they both claim that the data remains local and are processed locally on your computer (and I have no reason to doubt these claims), I simply don't trust web-based solutions in this regard as a future maintainer could silently change this policy/behavior.
+**Performance:** Some of the existing solutions hang for a long time without responding and/or take a really long time to finish (if they finished at all). I wanted something simpler, faster, and more reliable.
 
-**Flexibility:** I'm not a fan of having to view the data in a web browser. I want to read the data in a standard delimited format so that I can manipulate/filter it on the command line or in a spreadsheet application such as Microsoft Excel.
+**Privacy:** Both SyncTech and Matt Joseph's recommended solutions involve uploading the backup file(s) to a website. While they both claim that the data remain local and are processed locally on your computer (and I have no reason to doubt these claims), I simply don't trust web-based solutions in this regard as a future maintainer could silently change this policy/behavior.
+
+**Flexibility:** I'm not a fan of having to view the data in a web browser (I want to be able to work with the data *anywhere* I want to). I also want to limit any dependencies (such as configuring a web server and/or installing a runtime environment). I value making the data available in a standard delimited format so that I can manipulate/filter records on the command line or in a spreadsheet application (such as Microsoft Excel).
 
 ## License & Disclaimer
 
