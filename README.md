@@ -3,7 +3,7 @@
 This tool parses the XML output from the [SMS Backup & Restore Android app](https://play.google.com/store/apps/details?id=com.riteshsahu.SMSBackupRestore).
 
 ## Existing Parsers
-This app is currently maintained by [SyncTech](http://synctech.com.au/), and they offer both [paid and free versions](http://synctech.com.au/sms-backup-restore/) of the app as well as [an online parser](http://synctech.com.au/view-or-edit-sms-call-log-files-on-computer/). They also have [some documentation for the XML format used by the app on their website](http://synctech.com.au/fields-in-xml-backup-files/). In addition, [they documented various tools and methods for parsing the data.](http://synctech.com.au/view-or-edit-backup-files-on-computer/)
+The SMS Backup & Restore Android app is currently maintained by [SyncTech](http://synctech.com.au/), and they offer both [paid and free versions](http://synctech.com.au/sms-backup-restore/) of the app as well as [an online parser](http://synctech.com.au/view-or-edit-sms-call-log-files-on-computer/). They also have [some documentation for the XML format used by the app on their website](http://synctech.com.au/fields-in-xml-backup-files/). In addition, [they documented various tools and methods for parsing the data.](http://synctech.com.au/view-or-edit-backup-files-on-computer/)
 
 [Matt Joseph maintains an online tool for parsing these backups](https://mattj.io/sms-backup-reader/) ([GitHub project](https://github.com/devadvance/sms-backup-reader-2)). He also wrote [a legacy Java application for parsing the backups](https://mattj.io/sms-backup-reader/) ([GitHub project](https://github.com/devadvance/smsbackupreader)).
 
