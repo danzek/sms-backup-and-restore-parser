@@ -5,9 +5,7 @@ import (
 	"strconv"
 	"time"
 	"fmt"
-	"strings"
 	"encoding/base64"
-	"path/filepath"
 	"io/ioutil"
 	"os"
 )

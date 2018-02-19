@@ -3,7 +3,6 @@ package smsbackuprestore
 import (
 	"strings"
 	"unicode"
-	"fmt"
 )
 
 func NormalizePhoneNumber(number string) string {
