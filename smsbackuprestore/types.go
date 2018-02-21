@@ -45,8 +45,8 @@ type SMS struct {
 
 type MMS struct {
 	XMLName 			xml.Name 		`xml:"mms"`
-	TextOnly			int				`xml:"text_only,string,attr"`
-	Read				int				`xml:"read,string,attr"`
+	TextOnly			BoolValue		`xml:"text_only,string,attr"`
+	Read				ReadStatus		`xml:"read,string,attr"`
 	Date				AndroidTS		`xml:"date,string,attr"`  // consider reading in as int
 	Locked				BoolValue		`xml:"locked,string,attr"`
 	DateSent			AndroidTS		`xml:"date_sent,string,attr"`
