@@ -51,4 +51,29 @@ func main() {
 	if err := xml.Unmarshal(data, m); err != nil {
 		panic(err)
 	}
+
+	// print validation / qc / stats to stdout
+	m.PrintMessageCountQC()
+
+	// generate sms
+	fmt.Println("\nCreating SMS output...")
+	err = smsbackuprestore.GenerateSMSOutput(m)
+	if err != nil {
+		fmt.Printf("Error encountered:\n%q\n", err)
+	} else {
+		fmt.Println("Finished generating SMS output")
+		fmt.Println("sms.tsv file contains tab-separated values (TSV), i.e. use tab character as the delimiter")
+	}
+
+	// decode and output mms images
+	fmt.Println("\nCreating images output...")
+	numImagesIdentified, numImagesSuccessfullyWritten, imgOutputErrors := smsbackuprestore.DecodeImages(m)
+	if imgOutputErrors != nil && len(imgOutputErrors) > 0 {
+		for e := range imgOutputErrors {
+			fmt.Printf("\t%q\n", e)
+		}
+	}
+	fmt.Println("Finished decoding images")
+	fmt.Printf("%d images were identified and %d were successfully written to file\n", numImagesIdentified, numImagesSuccessfullyWritten)
+	fmt.Println("Image file names are in format: <original file name (if known)>_<mms index>-<sms index>.<file extension>")
 }
