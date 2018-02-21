@@ -163,3 +163,28 @@ func (p Part) DecodeAndWriteImage(outputPath string) error {
 
 	return nil
 }
+
+func (m *Messages) PrintMessageCountQC() {
+	lengthSMS := len(m.SMS)
+	lengthMMS := len(m.MMS)
+
+	fmt.Println("\nXML File Validation / QC")
+	fmt.Println("===============================================================")
+	fmt.Printf("Message count reported by SMS Backup and Restore app: %s\n", m.Count)
+
+	// convert reportedCount to int for later comparison/validation
+	count, err := strconv.Atoi(m.Count)
+	if err != nil {
+		fmt.Printf("Error converting reported count to integer: %s", m.Count)
+		count = 0
+	}
+
+	fmt.Printf("Actual # SMS messages identified: %d\n", lengthSMS)
+	fmt.Printf("Actual # MMS messages identified: %d\n", lengthMMS)
+	fmt.Printf("Total actual messages identified: %d ... ", lengthSMS + lengthMMS)
+	if lengthSMS + lengthMMS == count {
+		fmt.Print("OK\n")
+	} else {
+		fmt.Print("DISCREPANCY DETECTED\n")
+	}
+}

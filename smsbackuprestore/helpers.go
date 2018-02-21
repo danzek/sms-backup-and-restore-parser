@@ -35,22 +35,24 @@ func NormalizePhoneNumber(number string) string {
 
 func RemoveCommasBeforeSuffixes(contacts string) string {
 	// recursively strip commas before suffixes such as MD (doctors) to keep as single contact name
+	// obviously this list is insufficient -- must be tailored to individual data sets
+	// (this function could be its own project)
 	hit := false
 	suffixMap := map[string][]string{
-		"MD": {", MD", ",MD", ", M.D", ",M.D"},
-		"DO": {", DO", ",DO", ", D.O", ",D.O"},
-		"NP": {", NP", ",NP", ", N.P", ",N.P"},
-		"RN": {", RN", ",RN", ", R.N", ",R.N"},
-		"JR": {", JR", ",JR", ", J.R", ",J.R"},
-		"SR": {", SR", ",SR", ", S.R", ",S.R"},
-		"II": {", II", ",II"},
-		"III": {", III", ",III"},
-		"INC": {", INC", ",INC"},
-		"LLP": {", LLP", ",LLP", ", L.L.P", ",L.L.P"},
-		"LLC": {", LLC", ",LLC", ", L.L.C", ",L.L.C"},
-		"ACSW": {", ACSW", ",ACSW", ", A.C.S.W", ",A.C.S.W"},
-		"LCSW": {", LCSW", ",LCSW", ", L.C.S.W", ",L.C.S.W"},
-		"PHD": {", PHD", ",PHD", ", PH.D", ",PH.D", "P.H.D", ",P.H.D"},
+		"MD": 		{", MD", ",MD", ", M.D", ",M.D"},
+		"DO": 		{", DO", ",DO", ", D.O", ",D.O"},
+		"NP": 		{", NP", ",NP", ", N.P", ",N.P"},
+		"RN": 		{", RN", ",RN", ", R.N", ",R.N"},
+		"JR": 		{", JR", ",JR", ", J.R", ",J.R"},
+		"SR": 		{", SR", ",SR", ", S.R", ",S.R"},
+		"II": 		{", II", ",II"},
+		"III": 		{", III", ",III"},
+		"INC": 		{", INC", ",INC"},
+		"LLP": 		{", LLP", ",LLP", ", L.L.P", ",L.L.P"},
+		"LLC": 		{", LLC", ",LLC", ", L.L.C", ",L.L.C"},
+		"ACSW": 	{", ACSW", ",ACSW", ", A.C.S.W", ",A.C.S.W"},
+		"LCSW": 	{", LCSW", ",LCSW", ", L.C.S.W", ",L.C.S.W"},
+		"PHD": 		{", PHD", ",PHD", ", PH.D", ",PH.D", ", P.H.D", ",P.H.D"},
 	}
 
 	for s, combos := range suffixMap {
