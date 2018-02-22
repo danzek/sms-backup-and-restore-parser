@@ -18,3 +18,7 @@
 
 # Test data
 data/
+images/
+sms.tsv
+mms.tsv
+calls.tsv
