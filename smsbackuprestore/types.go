@@ -76,6 +76,10 @@ type Address struct {
 	Address				PhoneNumber		`xml:"address,string,attr"`
 }
 
+// String method for SMSMessageType type converts integer to human-readable message type
+//
+// See http://synctech.com.au/fields-in-xml-backup-files/
+//     Type: 1 = Received, 2 = Sent, 3 = Draft, 4 = Outbox, 5 = Failed, 6 = Queued
 func (smt SMSMessageType) String() string {
 	// see http://synctech.com.au/fields-in-xml-backup-files/
 	// type – 1 = Received, 2 = Sent, 3 = Draft, 4 = Outbox, 5 = Failed, 6 = Queued
@@ -86,6 +90,10 @@ func (smt SMSMessageType) String() string {
 	return strconv.Itoa(int(smt))  // ignoring error
 }
 
+// String method for SMSStatus type converts integer to human-readable status
+//
+// See http://synctech.com.au/fields-in-xml-backup-files/
+//     Status: None = -1, Complete = 0, Pending = 32, Failed = 64
 func (ss SMSStatus) String() string {
 	// see http://synctech.com.au/fields-in-xml-backup-files/
 	// status – None = -1, Complete = 0, Pending = 32, Failed = 64
@@ -103,6 +111,10 @@ func (ss SMSStatus) String() string {
 	}
 }
 
+// String method for ReadStatus type converts integer/boolean to human-readable read status
+//
+// See http://synctech.com.au/fields-in-xml-backup-files/
+//     Read: Read Message = 1, Unread Message = 0
 func (rs ReadStatus) String() string {
 	// see http://synctech.com.au/fields-in-xml-backup-files/
 	// read – Read Message = 1, Unread Message = 0
@@ -114,6 +126,8 @@ func (rs ReadStatus) String() string {
 	return ""
 }
 
+// String method for AndroidTS type converts string representing milliseconds since the Unix epoch into a
+// human-readable timestamp in UTC time zone.
 func (timestamp AndroidTS) String() string {
 	i, err := strconv.ParseInt(string(timestamp), 10, 64)
 	if err != nil {
@@ -123,6 +137,7 @@ func (timestamp AndroidTS) String() string {
 	return t.String()
 }
 
+// String method for BoolValue type converts integer/boolean into human-readable boolean value (true/false).
 func (bv BoolValue) String() string {
 	if bv == 0 {
 		return "False"
@@ -132,10 +147,12 @@ func (bv BoolValue) String() string {
 	return strconv.Itoa(int(bv))
 }
 
+// String method for PhoneNumber type attempts to normalize phone number by calling NormalizePhoneNumber().
 func (p PhoneNumber) String() string {
 	return NormalizePhoneNumber(string(p))
 }
 
+// ImageFileName method for Part type determines file name of base64-encoded image given Part and MMS and Part indices.
 func (p Part) ImageFileName(mmsIndex int, partIndex int) string {
 	ext := GetFileExtensionFromContentType(p.ContentType)
 	if ext == "jpeg" {
@@ -148,6 +165,7 @@ func (p Part) ImageFileName(mmsIndex int, partIndex int) string {
 	return fmt.Sprintf("%s_%d-%d.%s", fileName, mmsIndex, partIndex, ext)
 }
 
+// DecodeAndWriteImage decodes and writes base64-encoded image to file output path specified as parameter.
 func (p Part) DecodeAndWriteImage(outputPath string) error {
 	// decode base64 image string as byte slice
 	decodedImageBytes, err := base64.StdEncoding.DecodeString(p.Base64Data)
@@ -164,6 +182,7 @@ func (p Part) DecodeAndWriteImage(outputPath string) error {
 	return nil
 }
 
+// PrintMessageCountQC performs basic count validation and prints the results to stdout.
 func (m *Messages) PrintMessageCountQC() {
 	lengthSMS := len(m.SMS)
 	lengthMMS := len(m.MMS)

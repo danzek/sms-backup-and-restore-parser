@@ -1,3 +1,5 @@
+// Package main for command-line SMS Backup & Restore parser.
+// This tool parses SMS Backup & Restore Android app XML output.
 package main
 
 import (
@@ -8,7 +10,9 @@ import (
 	"github.com/danzek/sms-backup-and-restore-parser/smsbackuprestore"
 )
 
+// SMSOutput calls GenerateSMSOutput() and prints status/errors.
 func SMSOutput(m *smsbackuprestore.Messages) {
+	// generate sms
 	fmt.Println("\nCreating SMS output...")
 	err := smsbackuprestore.GenerateSMSOutput(m)
 	if err != nil {
@@ -19,6 +23,7 @@ func SMSOutput(m *smsbackuprestore.Messages) {
 	}
 }
 
+// MMSOutput calls DecodeImages() and GenerateMMSOutput() and prints status/errors.
 func MMSOutput(m *smsbackuprestore.Messages) {
 	// decode and output mms images
 	fmt.Println("\nCreating images output...")
@@ -43,7 +48,7 @@ func MMSOutput(m *smsbackuprestore.Messages) {
 	}
 }
 
-// main function for command-line SMS Backup & Restore app XML output parser
+// main function for command-line SMS Backup & Restore app XML output parser.
 func main() {
 	var xmlFilePath string
 

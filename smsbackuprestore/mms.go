@@ -8,6 +8,8 @@ import (
 	"strconv"
 )
 
+// DecodeImages identifies base64-encoded images in backed-up MMS messages and decodes them and outputs them to files
+// with a unique file name tied to the MMS and part index numbers.
 func DecodeImages(m *Messages) (numImagesIdentified, numImagesSuccessfullyWritten int, errors []error) {
 	numImagesIdentified = 0
 	numImagesSuccessfullyWritten = 0
@@ -36,6 +38,7 @@ func DecodeImages(m *Messages) (numImagesIdentified, numImagesSuccessfullyWritte
 	return numImagesIdentified, numImagesSuccessfullyWritten, errors
 }
 
+// GenerateMMSOutput outputs a tab-delimited file named "mms.tsv" containing parsed MMS messages from the backup file.
 func GenerateMMSOutput(m *Messages) error {
 	mmsOutput, err := os.Create("mms.tsv")
 	if err != nil {

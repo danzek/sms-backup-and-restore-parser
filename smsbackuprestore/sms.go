@@ -1,3 +1,6 @@
+/* Package smsbackuprestore contains types, type methods, and functions for parsing SMS Backup & Restore Android app
+   XML output and generating delimited data and decoding images from MMS messages.
+ */
 package smsbackuprestore
 
 import (
@@ -7,6 +10,7 @@ import (
 	"strconv"
 )
 
+// GenerateSMSOutput outputs a tab-delimited file named "sms.tsv" containing parsed SMS messages from the backup file.
 func GenerateSMSOutput(m *Messages) error {
 	smsOutput, err := os.Create("sms.tsv")
 	if err != nil {

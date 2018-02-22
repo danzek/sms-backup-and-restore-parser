@@ -5,6 +5,8 @@ import (
 	"unicode"
 )
 
+// NormalizePhoneNumber attempts to normalize phone numbers in the format 13125551212, ignoring input with multiple
+// numbers delimited by a tilde ('~') character.
 func NormalizePhoneNumber(number string) string {
 	if strings.Contains(number, "~") {
 		// don't parse when multiple numbers are provided (fail-safe)
@@ -33,6 +35,8 @@ func NormalizePhoneNumber(number string) string {
 	return number
 }
 
+// RemoveCommasBeforeSuffixes recursively strips commas before suffixes such as M.D. to prevent contact names from
+// being split by a comma in the middle of a name and suffix.
 func RemoveCommasBeforeSuffixes(contacts string) string {
 	// recursively strip commas before suffixes such as MD (doctors) to keep as single contact name
 	// obviously this list is insufficient -- must be tailored to individual data sets
@@ -87,6 +91,7 @@ func RemoveCommasBeforeSuffixes(contacts string) string {
 	return contacts
 }
 
+// GetFileExtensionFromContentType determines the file extension of the base64-encoded file based on the content type.
 func GetFileExtensionFromContentType(contentType string) string {
 	// content type is like "image/png", so this extracts "png" in this case
 	ext := contentType
@@ -97,6 +102,7 @@ func GetFileExtensionFromContentType(contentType string) string {
 	return ext
 }
 
+// CleanupMessageBody removes newlines and tabs from strings.
 func CleanupMessageBody(body string) string {
 	// strip unwanted characters from SMS body
 	body = strings.Replace(body, "\n", " ", -1)
