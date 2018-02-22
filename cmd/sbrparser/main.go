@@ -8,6 +8,41 @@ import (
 	"github.com/danzek/sms-backup-and-restore-parser/smsbackuprestore"
 )
 
+func SMSOutput(m *smsbackuprestore.Messages) {
+	fmt.Println("\nCreating SMS output...")
+	err := smsbackuprestore.GenerateSMSOutput(m)
+	if err != nil {
+		fmt.Printf("Error encountered:\n%q\n", err)
+	} else {
+		fmt.Println("Finished generating SMS output")
+		fmt.Println("sms.tsv file contains tab-separated values (TSV), i.e. use tab character as the delimiter")
+	}
+}
+
+func MMSOutput(m *smsbackuprestore.Messages) {
+	// decode and output mms images
+	fmt.Println("\nCreating images output...")
+	numImagesIdentified, numImagesSuccessfullyWritten, imgOutputErrors := smsbackuprestore.DecodeImages(m)
+	if imgOutputErrors != nil && len(imgOutputErrors) > 0 {
+		for e := range imgOutputErrors {
+			fmt.Printf("\t%q\n", e)
+		}
+	}
+	fmt.Println("Finished decoding images")
+	fmt.Printf("%d images were identified and %d were successfully written to file\n", numImagesIdentified, numImagesSuccessfullyWritten)
+	fmt.Println("Image file names are in format: <original file name (if known)>_<mms index>-<sms index>.<file extension>")
+
+	// generate mms output
+	fmt.Println("\nCreating MMS output...")
+	mmsOutputErr := smsbackuprestore.GenerateMMSOutput(m)
+	if mmsOutputErr != nil {
+		fmt.Printf("Error encountered:\n%q\n", mmsOutputErr)
+	} else {
+		fmt.Println("Finished generating MMS output")
+		fmt.Println("mms.tsv file contains tab-separated values (TSV), i.e. use tab character as the delimiter")
+	}
+}
+
 // main function for command-line SMS Backup & Restore app XML output parser
 func main() {
 	var xmlFilePath string
@@ -56,34 +91,10 @@ func main() {
 	m.PrintMessageCountQC()
 
 	// generate sms
-	fmt.Println("\nCreating SMS output...")
-	err = smsbackuprestore.GenerateSMSOutput(m)
-	if err != nil {
-		fmt.Printf("Error encountered:\n%q\n", err)
-	} else {
-		fmt.Println("Finished generating SMS output")
-		fmt.Println("sms.tsv file contains tab-separated values (TSV), i.e. use tab character as the delimiter")
-	}
+	SMSOutput(m)
 
-	// decode and output mms images
-	fmt.Println("\nCreating images output...")
-	numImagesIdentified, numImagesSuccessfullyWritten, imgOutputErrors := smsbackuprestore.DecodeImages(m)
-	if imgOutputErrors != nil && len(imgOutputErrors) > 0 {
-		for e := range imgOutputErrors {
-			fmt.Printf("\t%q\n", e)
-		}
-	}
-	fmt.Println("Finished decoding images")
-	fmt.Printf("%d images were identified and %d were successfully written to file\n", numImagesIdentified, numImagesSuccessfullyWritten)
-	fmt.Println("Image file names are in format: <original file name (if known)>_<mms index>-<sms index>.<file extension>")
+	// generate mms
+	MMSOutput(m)
 
-	// generate mms output
-	fmt.Println("\nCreating MMS output...")
-	mmsOutputErr := smsbackuprestore.GenerateMMSOutput(m)
-	if mmsOutputErr != nil {
-		fmt.Printf("Error encountered:\n%q\n", mmsOutputErr)
-	} else {
-		fmt.Println("Finished generating MMS output")
-		fmt.Println("mms.tsv file contains tab-separated values (TSV), i.e. use tab character as the delimiter")
-	}
+	fmt.Println("\nFinished.")
 }
