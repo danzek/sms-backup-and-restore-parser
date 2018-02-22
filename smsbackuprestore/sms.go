@@ -1,5 +1,6 @@
-/* Package smsbackuprestore contains types, type methods, and functions for parsing SMS Backup & Restore Android app
-   XML output and generating delimited data and decoding images from MMS messages.
+/*
+Package smsbackuprestore contains types, type methods, and functions for parsing SMS Backup & Restore Android app
+XML output and generating delimited data and decoding images from MMS messages.
  */
 package smsbackuprestore
 
