@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"encoding/xml"
 	"github.com/danzek/sms-backup-and-restore-parser/smsbackuprestore"
+	"time"
 )
 
 // SMSOutput calls GenerateSMSOutput() and prints status/errors.
@@ -50,6 +51,9 @@ func MMSOutput(m *smsbackuprestore.Messages) {
 
 // main function for command-line SMS Backup & Restore app XML output parser.
 func main() {
+	// time program execution
+	start := time.Now()
+
 	var xmlFilePath string
 
 	// ensure required arg passed and file is valid (file path to xml file with sms backup and restore output)
@@ -78,7 +82,7 @@ func main() {
 	}
 	defer f.Close()
 
-	fmt.Printf("Parsing %s ...\n", xmlFilePath)
+	fmt.Printf("Loading %s into memory and parsing (this may take a little while) ...\n", xmlFilePath)
 
 	// read entire file into data variable
 	data, fileReadErr := ioutil.ReadFile(xmlFilePath)
@@ -101,5 +105,6 @@ func main() {
 	// generate mms
 	MMSOutput(m)
 
-	fmt.Println("\nFinished.")
+	// print completion message
+	fmt.Printf("\nCompleted in %.2f seconds.\n", time.Since(start).Seconds())
 }
