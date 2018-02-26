@@ -22,6 +22,23 @@ And an example on Windows, directing output to the Desktop:
 
     sbrparser.exe -d C:\Users\4n68r\Desktop calls-20180101000000.xml sms-20180101000000.xml
 
+## Expected Outputs
+
+For the **calls backup file**, expected output is:
+
+ - `calls.tsv` &mdash; tab-separated parsed calls data.
+
+
+For the **SMS backup file**, expected outputs are:
+
+ - `sms.tsv` &mdash; tab-separated parsed SMS data.
+ - `mms.tsv` &mdash; tab-separated parsed MMS data.
+ - `images/` &mdash; directory containing decoded images from MMS messages, saved with original file name plus MMS and Part indices to ensure a unique file name. File name format:
+
+       <original file name>_<MMS Message Index>-<MMS Message Part Index>.<File Extension>
+
+   A column named "`Part Output Image Name`" in the MMS output contains the precise file name of the outputted image.
+
 ## Existing Parsers
 The SMS Backup & Restore Android app is currently maintained by [SyncTech](http://synctech.com.au/), and they offer both [paid and free versions](http://synctech.com.au/sms-backup-restore/) of the app as well as [an online parser](http://synctech.com.au/view-or-edit-sms-call-log-files-on-computer/). They also have [some documentation for the XML format used by the app on their website](http://synctech.com.au/fields-in-xml-backup-files/). In addition, [they documented various tools and methods for parsing the data.](http://synctech.com.au/view-or-edit-backup-files-on-computer/)
 
