@@ -9,10 +9,18 @@ This tool assumes the default file naming convention of the [SMS Backup & Restor
     calls-20180101000000.xml
     sms-20180101000000.xml
 
-Simply pass the file name(s) of the XML backup file(s) you wish to parse and the tool will correctly identify the type of backup based on the file name. The parser can be ran with one or both files as parameters and will output data to the directory from where the tool is executed. Below are examples of running the compiled application on *nix and Windows systems, respectively:
+Simply pass the file name(s) of the XML backup file(s) you wish to parse and the tool will correctly identify the type of backup based on the file name. The parser can be ran with one or both files as parameters and will output data to the directory where the tool is located by default. Below are examples of running the compiled application on *nix and Windows systems, respectively:
 
     ./sbrparser calls-20180101000000.xml
     sbrparser.exe calls-20180101000000.xml sms-20180101000000.xml
+
+To change the output directory (the default is the location of the program itself), use the `-d` parameter *before* passing the XML backup filename(s). For example, to output to the current working directory (`pwd`) on *nix:
+
+    ./sbrparser -d . calls-20180101000000.xml sms-20180101000000.xml
+
+And an example on Windows, directing output to the Desktop:
+
+    sbrparser.exe -d C:\Users\4n68r\Desktop calls-20180101000000.xml sms-20180101000000.xml
 
 ## Existing Parsers
 The SMS Backup & Restore Android app is currently maintained by [SyncTech](http://synctech.com.au/), and they offer both [paid and free versions](http://synctech.com.au/sms-backup-restore/) of the app as well as [an online parser](http://synctech.com.au/view-or-edit-sms-call-log-files-on-computer/). They also have [some documentation for the XML format used by the app on their website](http://synctech.com.au/fields-in-xml-backup-files/). In addition, [they documented various tools and methods for parsing the data.](http://synctech.com.au/view-or-edit-backup-files-on-computer/)
