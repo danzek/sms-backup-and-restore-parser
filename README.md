@@ -9,7 +9,7 @@ This tool assumes the default file naming convention of the [SMS Backup & Restor
     calls-20180101000000.xml
     sms-20180101000000.xml
 
-Simply pass the file name(s) of the XML backup file you wish to parse and the tool will correctly identify the type of backup based on the file name. The parser can be ran with one or both files as parameters and will output data to the directory from where the tool is executed. Examples of running compiled application on *nix and Windows systems, respectively:
+Simply pass the file name(s) of the XML backup file(s) you wish to parse and the tool will correctly identify the type of backup based on the file name. The parser can be ran with one or both files as parameters and will output data to the directory from where the tool is executed. Below are examples of running the compiled application on *nix and Windows systems, respectively:
 
     ./sbrparser calls-20180101000000.xml
     sbrparser.exe calls-20180101000000.xml sms-20180101000000.xml
