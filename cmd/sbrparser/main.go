@@ -111,7 +111,6 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Invalid output directory path: %s", *pOutputDirectory)
 		return
 	}
-
 	fmt.Printf("Output directory set to %s\n", *pOutputDirectory)
 
 	if len(flag.Args()) > 0 {
@@ -171,7 +170,6 @@ func main() {
 			} else {
 				fmt.Fprintf(os.Stderr, "Unexpected file name: %s\n", fileName)
 			}
-
 		}
 	} else {
 		fmt.Fprint(os.Stderr, "Missing required argument: Specify path to xml backup file(s).\n" +
