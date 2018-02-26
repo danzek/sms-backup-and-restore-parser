@@ -76,6 +76,19 @@ func MMSOutput(m *smsbackuprestore.Messages, outputDir string) {
 	}
 }
 
+// CallsOutput calls GenerateCallOutput() and prints status/errors.
+func CallsOutput (c *smsbackuprestore.Calls, outputDir string) {
+	// generate calls
+	fmt.Println("\nCreating calls output...")
+	err := smsbackuprestore.GenerateCallOutput(c, outputDir)
+	if err != nil {
+		fmt.Printf("Error encountered:\n%q\n", err)
+	} else {
+		fmt.Println("Finished generating calls output")
+		fmt.Println("calls.tsv file contains tab-separated values (TSV), i.e. use tab character as the delimiter")
+	}
+}
+
 // GetExecutablePath returns the absolute path to the location where this executable is being ran from
 func GetExecutablePath() (string, error) {
 	exe, err := os.Executable()
@@ -164,8 +177,17 @@ func main() {
 					MMSOutput(m, *pOutputDirectory)
 				} else {
 					// calls backup
-					// todo -- parse calls
-					fmt.Println("Parsing of calls backup not yet implemented.")
+					// instantiate calls object
+					c := new(smsbackuprestore.Calls)
+					if err := xml.Unmarshal(data, c); err != nil {
+						panic(err)
+					}
+
+					// print validation / qc / stats to stdout
+					c.PrintCallCountQC()
+
+					// generate calls output
+					CallsOutput(c, *pOutputDirectory)
 				}
 			} else {
 				fmt.Fprintf(os.Stderr, "Unexpected file name: %s\n", fileName)

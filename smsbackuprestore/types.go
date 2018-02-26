@@ -42,12 +42,13 @@ type SMSStatus			int
 type AndroidTS 			string
 type BoolValue			int
 type ReadStatus			int
+type CallType			int
 
 type Messages struct {
 	XMLName 			xml.Name 		`xml:"smses"`
 	Count 				string 			`xml:"count,attr"`
 	BackupSet			string			`xml:"backup_set,attr"`
-	BackupDateString	string			`xml:"backup_date,attr"`
+	BackupDate			AndroidTS		`xml:"backup_date,string,attr"`
 	SMS 				[]SMS			`xml:"sms"`
 	MMS 				[]MMS			`xml:"mms"`
 }
@@ -102,6 +103,24 @@ type Address struct {
 	Address				PhoneNumber		`xml:"address,string,attr"`
 }
 
+type Calls struct {
+	XMLName				xml.Name		`xml:"calls"`
+	Count 				string 			`xml:"count,attr"`
+	BackupSet			string			`xml:"backup_set,attr"`
+	BackupDate			AndroidTS		`xml:"backup_date,string,attr"`
+	Calls				[]Call			`xml:"call"`
+}
+
+type Call struct {
+	XMLName				xml.Name		`xml:"call"`
+	Number				PhoneNumber		`xml:"number,string,attr"`
+	Duration			int				`xml:"duration,string,attr"`
+	Date				AndroidTS		`xml:"date,string,attr"`  // consider reading in as int
+	Type				CallType		`xml:"type,string,attr"`
+	ReadableDate		string			`xml:"readable_date,attr"`
+	ContactName			string			`xml:"contact_name,attr"`
+}
+
 // String method for SMSMessageType type converts integer to human-readable message type
 //
 // See http://synctech.com.au/fields-in-xml-backup-files/
@@ -135,6 +154,20 @@ func (ss SMSStatus) String() string {
 	default:
 		return ""
 	}
+}
+
+// String method for CallType type converts integer to human-readable status
+//
+// See http://synctech.com.au/wp-content/uploads/2017/12/calls.xsl
+//    Type: 1 = Incoming, 2 = Outgoing, 3 = Missed, 4 = Voicemail, 5 = Rejected, 6 = Refused List
+func (ct CallType) String() string {
+	// see http://synctech.com.au/wp-content/uploads/2017/12/calls.xsl
+	// Type: 1 = Incoming, 2 = Outgoing, 3 = Missed, 4 = Voicemail, 5 = Rejected, 6 = Refused List
+	callType := []string{"Incoming", "Outgoing", "Missed", "Voicemail", "Rejected", "Refused List"}
+	if ct > 0 && ct < 7 {
+		return callType[ct-1]
+	}
+	return strconv.Itoa(int(ct))  // ignoring error
 }
 
 // String method for ReadStatus type converts integer/boolean to human-readable read status
@@ -215,6 +248,7 @@ func (m *Messages) PrintMessageCountQC() {
 
 	fmt.Println("\nXML File Validation / QC")
 	fmt.Println("===============================================================")
+	fmt.Printf("Backup Date: %s\n", m.BackupDate.String())
 	fmt.Printf("Message count reported by SMS Backup and Restore app: %s\n", m.Count)
 
 	// convert reportedCount to int for later comparison/validation
@@ -228,6 +262,30 @@ func (m *Messages) PrintMessageCountQC() {
 	fmt.Printf("Actual # MMS messages identified: %d\n", lengthMMS)
 	fmt.Printf("Total actual messages identified: %d ... ", lengthSMS + lengthMMS)
 	if lengthSMS + lengthMMS == count {
+		fmt.Print("OK\n")
+	} else {
+		fmt.Print("DISCREPANCY DETECTED\n")
+	}
+}
+
+// PrintCallCountQC performs basic count validation and prints the results to stdout.
+func (c *Calls) PrintCallCountQC() {
+	lengthCalls := len(c.Calls)
+
+	fmt.Println("\nXML File Validation / QC")
+	fmt.Println("===============================================================")
+	fmt.Printf("Backup Date: %s\n", c.BackupDate.String())
+	fmt.Printf("Call count reported by SMS Backup and Restore app: %s\n", c.Count)
+
+	// convert reportedCount to int for later comparison/validation
+	count, err := strconv.Atoi(c.Count)
+	if err != nil {
+		fmt.Printf("Error converting reported count to integer: %s", c.Count)
+		count = 0
+	}
+
+	fmt.Printf("Total actual calls identified: %d ... ", lengthCalls)
+	if lengthCalls == count {
 		fmt.Print("OK\n")
 	} else {
 		fmt.Print("DISCREPANCY DETECTED\n")
