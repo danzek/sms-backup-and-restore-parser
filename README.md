@@ -2,6 +2,18 @@
 
 This tool parses the XML output from the [SMS Backup & Restore Android app](https://play.google.com/store/apps/details?id=com.riteshsahu.SMSBackupRestore).
 
+## Usage
+
+This tool assumes the default file naming convention of the [SMS Backup & Restore Android app](https://play.google.com/store/apps/details?id=com.riteshsahu.SMSBackupRestore), e.g.,
+
+    calls-20180101000000.xml
+    sms-20180101000000.xml
+
+Simply pass the file name(s) of the XML backup file you wish to parse and the tool will correctly identify the type of backup based on the file name. The parser can be ran with one or both files as parameters and will output data to the directory from where the tool is executed. Examples of running compiled application on *nix and Windows systems, respectively:
+
+    ./sbrparser calls-20180101000000.xml
+    sbrparser.exe calls-20180101000000.xml sms-20180101000000.xml
+
 ## Existing Parsers
 The SMS Backup & Restore Android app is currently maintained by [SyncTech](http://synctech.com.au/), and they offer both [paid and free versions](http://synctech.com.au/sms-backup-restore/) of the app as well as [an online parser](http://synctech.com.au/view-or-edit-sms-call-log-files-on-computer/). They also have [some documentation for the XML format used by the app on their website](http://synctech.com.au/fields-in-xml-backup-files/). In addition, [they documented various tools and methods for parsing the data.](http://synctech.com.au/view-or-edit-backup-files-on-computer/)
 

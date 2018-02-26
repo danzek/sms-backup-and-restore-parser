@@ -1,7 +1,29 @@
 /*
-Package smsbackuprestore contains types, type methods, and functions for parsing SMS Backup & Restore Android app
-XML output and generating delimited data and decoding images from MMS messages.
+SBRParser: SMS Backup & Restore Android app parser
+
+Copyright (c) 2018 Dan O'Day <d@4n68r.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
+
+// Package smsbackuprestore contains types, type methods, and functions for parsing SMS Backup & Restore Android app
+// XML output and generating delimited data and decoding images from MMS messages.
 package smsbackuprestore
 
 import (
@@ -9,11 +31,12 @@ import (
 	"os"
 	"strings"
 	"strconv"
+	"path/filepath"
 )
 
 // GenerateSMSOutput outputs a tab-delimited file named "sms.tsv" containing parsed SMS messages from the backup file.
-func GenerateSMSOutput(m *Messages) error {
-	smsOutput, err := os.Create("sms.tsv")
+func GenerateSMSOutput(m *Messages, outputDir string) error {
+	smsOutput, err := os.Create(filepath.Join(outputDir, "sms.tsv"))
 	if err != nil {
 		return fmt.Errorf("Unable to create file: sms.tsv\n%q", err)
 	}
