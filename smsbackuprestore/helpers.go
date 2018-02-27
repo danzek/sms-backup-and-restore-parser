@@ -27,7 +27,32 @@ package smsbackuprestore
 import (
 	"strings"
 	"unicode"
+	"regexp"
 )
+
+// ReplaceAllBytesSubmatchFunc replaces all bytes in the byte slice that match the specified pattern.
+//
+// This is being done in an attempt to render emoji's properly due to SMS Backup & Restore app rendering of emoji's as
+// HTML entitites in decimal (SLOW).
+//
+// Function is based on http://elliot.land/post/go-replace-string-with-regular-expression-callback
+func ReplaceAllBytesSubmatchFunc(re *regexp.Regexp, b []byte, repl func([][]byte) []byte) []byte {
+	var result []byte
+	lastIndex := 0
+
+	for _, v := range re.FindAllSubmatchIndex(b, -1) {
+		var groups [][]byte
+		for i := 0; i < len(v); i += 2 {
+			groups = append(groups, b[v[i]:v[i+1]])
+		}
+
+		result = append(result, b[lastIndex:v[0]]...)
+		result = append(result, repl(groups)...)
+		lastIndex = v[1]
+	}
+	result = append(result, b[lastIndex:]...)
+	return result
+}
 
 // NormalizePhoneNumber attempts to normalize phone numbers in the format 13125551212, ignoring input with multiple
 // numbers delimited by a tilde ('~') character.

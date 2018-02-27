@@ -36,6 +36,9 @@ import (
 	"time"
 	"path/filepath"
 	"strings"
+	"regexp"
+	"strconv"
+	"unicode/utf16"
 )
 
 // SMSOutput calls GenerateSMSOutput() and prints status/errors.
@@ -157,6 +160,15 @@ func main() {
 				if fileReadErr != nil {
 					panic(fileReadErr)
 				}
+
+				// attempt to render emoji's properly due to SMS Backup & Restore app rendering of emoji's as HTML entitites in decimal (slow)
+				re := regexp.MustCompile(`&#(\d{5});&#(\d{5});`)
+				data = smsbackuprestore.ReplaceAllBytesSubmatchFunc(re, data, func(groups [][]byte) []byte {
+					high, _ := strconv.Atoi(string(groups[2]))
+					low, _ := strconv.Atoi(string(groups[1]))
+
+					return []byte(fmt.Sprintf("&#%d;", int(utf16.Decode([]uint16{uint16(low), uint16(high)})[0])))
+				})
 
 				// determine file type
 				if strings.HasPrefix(fileName, "sms-") {
