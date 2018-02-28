@@ -103,6 +103,7 @@ func RemoveCommasBeforeSuffixes(contacts string) string {
 		"INC": 		{", INC", ",INC"},
 		"LLP": 		{", LLP", ",LLP", ", L.L.P", ",L.L.P"},
 		"LLC": 		{", LLC", ",LLC", ", L.L.C", ",L.L.C"},
+		"LPN": 		{", LPN", ",LPN", ", L.P.N", ",L.P.N"},
 		"ACSW": 	{", ACSW", ",ACSW", ", A.C.S.W", ",A.C.S.W"},
 		"LCSW": 	{", LCSW", ",LCSW", ", L.C.S.W", ",L.C.S.W"},
 		"MA":		{", MA", ",MA", ", M.A", ",M.A"},
