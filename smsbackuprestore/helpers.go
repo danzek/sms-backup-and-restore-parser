@@ -86,8 +86,26 @@ func NormalizePhoneNumber(number string) string {
 
 // RemoveCommasBeforeSuffixes recursively strips commas before suffixes such as M.D. to prevent contact names from
 // being split by a comma in the middle of a name and suffix.
+//
+// The list is by no means comprehensive but includes the following common suffixes:
+// - MD
+// - DO
+// - NP
+// - RN
+// - JR
+// - SR
+// - II
+// - III
+// - INC
+// - LLP
+// - LLC
+// - LPN
+// - ACSW
+// - LCSW
+// - MA
+// - PHD
 func RemoveCommasBeforeSuffixes(contacts string) string {
-	// recursively strip commas before suffixes such as MD (doctors) to keep as single contact name
+	// recursively strip commas before suffixes such as MD (doctors) or PhD to keep as single contact name
 	// obviously this list is insufficient -- must be tailored to individual data sets
 	// (this function could be its own project)
 	hit := false
