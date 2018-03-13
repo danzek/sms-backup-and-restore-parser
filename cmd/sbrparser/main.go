@@ -39,6 +39,7 @@ import (
 	"regexp"
 	"strconv"
 	"unicode/utf16"
+	"bytes"
 )
 
 // SMSOutput calls GenerateSMSOutput() and prints status/errors.
@@ -160,6 +161,9 @@ func main() {
 				if fileReadErr != nil {
 					panic(fileReadErr)
 				}
+				
+				// remove null bytes encoded as XML entities because the Java developer of SMS Backup & Restore doesn't understand UTF-8 nor XML
+				data = bytes.Replace(data, []byte("&#0;"), []byte(""), -1)
 
 				// attempt to render emoji's properly due to SMS Backup & Restore app rendering of emoji's as HTML entitites in decimal (slow)
 				re := regexp.MustCompile(`&#(\d{5});&#(\d{5});`)
