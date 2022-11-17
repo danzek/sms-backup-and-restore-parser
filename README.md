@@ -65,3 +65,14 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Installation
+
+1. [Download and install Go](https://go.dev/doc/install)
+2. [Ensure your `GOPATH` is correctly configured](https://go.dev/doc/gopath_code)
+3. Use `go install` to download, build, and install SMS Backup & Restore Parser (`sbrparser`) into [your `GOPATH`](https://go.dev/doc/gopath_code#GOPATH)
+
+
+    go install 'github.com/danzek/sms-backup-and-restore-parser/cmd/sbrparser@latest'
+
+This README is *not* a tutorial for how to use Go to install software. I've added these instructions as a courtesy for those unfamiliar with golang. If you need further assistance, [consult other resources for learning golang.](https://go.dev/doc/tutorial/getting-started)
