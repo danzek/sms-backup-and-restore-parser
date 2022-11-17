@@ -73,8 +73,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 3. Use `go install` to download, build, and install SMS Backup & Restore Parser (`sbrparser`) into [your `GOPATH`](https://go.dev/doc/gopath_code#GOPATH)
 
 
-
-    go install 'github.com/danzek/sms-backup-and-restore-parser/cmd/sbrparser@latest'
+`go install 'github.com/danzek/sms-backup-and-restore-parser/cmd/sbrparser@latest'`
 
 
 This README is *not* a tutorial for how to use Go to install software. I've added these instructions as a courtesy for those unfamiliar with golang. If you need further assistance, [consult other resources for learning golang.](https://go.dev/doc/tutorial/getting-started)
